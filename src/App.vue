@@ -1,48 +1,49 @@
+<!-- ExampleComponent.vue -->
 <template>
-  <h1>Vue 3 Basics</h1>
-  <HelloWorld name="Vanna" @sayHello="handleHello"/>
+  <!-- Root element for the component -->
+  <div class="example-component">
+    <!-- Interpolation: display reactive data -->
+    <h1>{{ message }}</h1>
 
-  <!-- 6. Composition API (core vue 3 skills) -->
-   <p>Count: {{ count }}</p>
-   <button @click="increment">+</button>
-   
-   <p>User Name: {{ user.name }}, Age: {{ user.age }}</p>
+    <!-- Conditional rendering -->
+    <p v-if="isVisible">This text is visible</p>
+    <p v-else>This text is hidden</p>
+
+    <!-- List rendering -->
+    <ul>
+      <li v-for="item in items" :key="item.id">{{ item.name }}</li>
+    </ul>
+
+    <!-- Event handling -->
+    <button @click="handleClick">Click Me</button>
+  </div>
 </template>
 
 <script>
-import { ref, reactive } from 'vue';
-import HelloWorld from './components/HelloWorld.vue'
+import { ref } from 'vue'
 
 export default {
-  components: {
-    HelloWorld
-  },
-  methods: {
-    handleHello(message){
-      alert(message)
+  setup() {
+    const message = ref('Hello, Vue 3!')
+    const isVisible = ref(true)
+    const items = ref([
+      { id: 1, name: 'Item One' },
+      { id: 2, name: 'Item Two' },
+      { id: 3, name: 'Item Three' }
+    ])
+
+    const handleClick = () => {
+      isVisible.value = !isVisible.value
     }
+
+    return { message, isVisible, items, handleClick }
   }
 }
-// Composition API
-const count = ref(0);
-function increment(){
-  count.value ++;
-  console.log('count is now ' + count.value);
-  
-}
-
-const user = reactive({
-  name: 'Vanna',
-  age: 22
-})
-//directly reactive, no .value needed
-user.name = 'Updated Vanna';
-user.age = 23;
-
-
-// Key rules:
-
-// ref() → primitive values
-
-// .value in JS, not in template
 </script>
+
+<style scoped>
+.example-component h1 {
+  color: #42b983;
+}
+</style>
+
