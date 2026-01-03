@@ -5,39 +5,27 @@
     <!-- Interpolation: display reactive data -->
     <h1>{{ message }}</h1>
 
-    <!-- Conditional rendering -->
-    <p v-if="isVisible">This text is visible</p>
-    <p v-else>This text is hidden</p>
-
-    <!-- List rendering -->
-    <ul>
-      <li v-for="item in items" :key="item.id">{{ item.name }}</li>
-    </ul>
-
-    <!-- Event handling -->
-    <button @click="handleClick">Click Me</button>
+    
   </div>
 </template>
 
 <script>
-import { ref } from 'vue'
+import { ref, onMounted } from 'vue'
 
 export default {
   setup() {
-    const message = ref('Hello, Vue 3!')
-    const isVisible = ref(true)
-    const items = ref([
-      { id: 1, name: 'Item One' },
-      { id: 2, name: 'Item Two' },
-      { id: 3, name: 'Item Three' }
-    ])
+    const message = ref('Loading...')
 
-    const handleClick = () => {
-      isVisible.value = !isVisible.value
-    }
+    onMounted(()=>{
+      // Runs after component is in the DOM
+      message.value = 'Component has been mounted!';
+      console.log('DOM is ready, you can interact with it now');
 
-    return { message, isVisible, items, handleClick }
+    });
+    return { message}
+    
   }
+  
 }
 </script>
 
