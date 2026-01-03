@@ -3,26 +3,34 @@
   <!-- Root element for the component -->
   <div class="example-component">
     <!-- Interpolation: display reactive data -->
-    <h1>{{ message }}</h1>
+    <h1>{{ time }}</h1>
 
     
   </div>
 </template>
 
 <script>
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, onUnmounted } from 'vue'
 
 export default {
   setup() {
-    const message = ref('Loading...')
+   
+    const time = ref(0);
+    let intervalId ;
 
-    onMounted(()=>{
-      // Runs after component is in the DOM
-      message.value = 'Component has been mounted!';
-      console.log('DOM is ready, you can interact with it now');
+    onMounted(() => {
+      intervalId = setInterval(() => {
+        time.value++;
 
+      }, 1000);
     });
-    return { message}
+
+    onUnmounted(() => {
+      clearInterval(intervalId); //clean up timer
+      console.log('Component unmounted, interval cleared.');
+    });
+    return { time };
+    
     
   }
   
@@ -35,3 +43,4 @@ export default {
 }
 </style>
 
+ 
