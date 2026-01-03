@@ -5,6 +5,8 @@
     <p>Welcome to your Vue.js application.</p>
     <!-- 5. Emits (child -> parent) -->
      <button @click="sendMessage">click Me</button>
+
+     
   </div>
 </template>
 <script>
