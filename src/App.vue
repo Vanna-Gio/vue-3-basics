@@ -1,9 +1,14 @@
 <template>
   <h1>Vue 3 Basics</h1>
-
+  <HelloWorld />
 </template>
+
 <script>
-  export default {
-    name: 'App',
+import HelloWorld from './components/HelloWorld.vue'
+
+export default {
+  components: {
+    HelloWorld
   }
+}
 </script>
