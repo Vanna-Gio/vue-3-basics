@@ -1,8 +1,10 @@
 <template>
-  <p>Hello from component</p>
+  <p>Hello {{ name }}</p>
 </template>
 <script>
   export default {
-    name: 'HelloWorld',
+    props: {
+      name: String
+    }
   }
 </script>

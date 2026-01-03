@@ -1,6 +1,6 @@
 <template>
   <h1>Vue 3 Basics</h1>
-  <HelloWorld />
+  <HelloWorld name="Vanna" />
 </template>
 
 <script>
