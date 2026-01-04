@@ -17,6 +17,7 @@
   import { ref } from 'vue'
   import TaskInput from './components/TaskInput.vue';
 import TaskList from './components/TaskList.vue';
+import { watch, onMounted } from 'vue';
 
   const tasks = ref([])
 
@@ -37,6 +38,17 @@ import TaskList from './components/TaskList.vue';
     tasks.value = tasks.value.filter(t => t.id !== id )
   }
 
+  onMounted(() => {
+    const saved = localStorage.getItem('tasks')
+    if (saved) {
+      tasks.value = JSON.parse(saved)
+    }
+  })
+
+  watch (tasks, (newTasks) => {
+    localStorage.setItem('tasks', JSON.stringify(newTasks))
+  }, { deep: true})
+  
 
 </script>
 <style >
