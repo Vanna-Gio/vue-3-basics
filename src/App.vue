@@ -3,21 +3,40 @@
     <h1>Task Tracker</h1>
     <TaskInput @add-task="addTask"/>
     <TaskList
-      :tasks="tasks"
+      :tasks="filteredTasks"
       @toggle-task="toggleTask"
       @delete-task="deleteTask"
+      @update-task="updateTask"
     />
 
   </div>
   
-  
+  <div class="filters">
+    <button @click="filter = 'all'">All</button>
+    <button @click="filter = 'active'">Active</button>
+    <button @click="filter = 'done'">Done</button>
+</div>
+
 </template>
 
 <script setup>
-  import { ref } from 'vue'
+  import { ref,  computed } from 'vue'
   import TaskInput from './components/TaskInput.vue';
 import TaskList from './components/TaskList.vue';
 import { watch, onMounted } from 'vue';
+const filter = ref('all')
+
+const filteredTasks = computed(() => {
+  if (filter.value === 'active') {
+    return tasks.value.filter(t => !t.done)
+  }
+
+  if (filter.value === 'done') {
+    return tasks.value.filter(t => t.done)
+  }
+
+  return tasks.value
+})
 
   const tasks = ref([])
 
@@ -49,7 +68,12 @@ import { watch, onMounted } from 'vue';
     localStorage.setItem('tasks', JSON.stringify(newTasks))
   }, { deep: true})
   
-
+  function updateTask({id, title}) {
+    const task = tasks.value.find(t => t.id === id)
+    if(task){
+      task.title = title
+    }
+  }
 </script>
 <style >
   .app {
