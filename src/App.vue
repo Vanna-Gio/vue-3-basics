@@ -2,8 +2,15 @@
   <div class="app">
     <h1>Task Tracker</h1>
     <TaskInput @add-task="addTask"/>
-    <TaskList :tasks="tasks" />
+    <TaskList
+      :tasks="tasks"
+      @toggle-task="toggleTask"
+      @delete-task="deleteTask"
+    />
+
   </div>
+  
+  
 </template>
 
 <script setup>
@@ -19,6 +26,15 @@ import TaskList from './components/TaskList.vue';
       title,
       done: false
     })
+  }
+
+  function toggleTask(id) {
+    const task =  tasks.value.find(t => t.id === id)
+    task.done = !task.done
+  }
+
+  function deleteTask(id){
+    tasks.value = tasks.value.filter(t => t.id !== id )
   }
 
 
